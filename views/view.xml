@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+   
+   <data noupdate="1">
+        <record id="seq_pick" model="ir.sequence">
+            <field name="name">pick.sequence</field>
+            <field name="code">pickorder</field>
+            <field name="prefix">SK</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+  
+
+
+
+
+    <record id="picking_tree" model="ir.ui.view">
+        <field name="name">Picking OrdersS</field>
+        <field name="model">pickings.orders</field>
+        <field name="arch" type="xml">
+             <tree>
+                <field name="name"/>
+                <!--
+                 <field name="picking_ids" widget="many2many_tags"/>
+                 <field name="picking_ids" eval="[(6,0,[ref('name')])]+'s'"/>
+                --> 
+                 <field name="refe"/>
+                
+                 <field name="person"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="picking_report" model="ir.ui.view">
+        <field name="name">Picking Report</field>
+        <field name="model">pickings.orders</field>
+        <field name="arch" type="xml">
+             <tree>
+                <field name="name"/>
+                <field name="person"/>
+                 <field name="user_id"/>
+    
+            </tree>
+           
+        </field>
+    </record>
+    
+    <record id="picking_form" model="ir.ui.view">
+        <field name="name">Picking OrdersS</field>
+        <field name="model">pickings.orders</field>
+        <field name="priority" eval="14"/>
+        <field name="arch" type="xml">
+          
+             <form>
+                 <header>
+                 <h3>Header Form</h3>
+                 <!-- Buttons go here-->
+                 </header>
+                 <!--
+                 <group>
+                     
+                    
+                      <field name="name"/>
+                   
+                      <field name="reference"/>
+                      
+                     
+                 </group>
+                  -->    
+                      
+                      <field name="picking_ids" widget="many2many_list">
+                      <tree editable="bottom">
+                            <!--
+                            <field name="name"/>
+                            -->  
+                            <field name="reference"/>
+                            <field name="partnerid"/>
+                            <field name="status"/>
+                            </tree>
+                      </field>
+                      <footer>
+                        <button name="do_save"  string="Take it" type="object" />
+                        <span>Or</span>
+                        <button name="do_target"  string="Cancel" type="object" />
+                        <button name="print_report"  string="Print" type="object" />
+                        <!--- 
+                        <button name="test_test"  string="Cancel" type="object" />
+                      -->
+                      </footer>  
+                     
+            </form>
+             
+        </field>
+    </record>
+
+    <record id="picking_list" model="ir.ui.view">
+        <field name="name">Picking List</field>
+        <field name="model">stock.picking</field>
+       <!--
+       <field name="inherit_id" ref="base.view_partner_form"/>
+       -->
+        <field name="priority" eval="14"/>
+        <field name="arch" type="xml">
+              <form>
+                 <field name="name"/>
+              </form>     
+        </field>
+    </record>
+    <data>
+      <report
+        id="reportfel"
+        model="stock.picking"
+        string="Report name"
+        report_type="qweb-pdf"
+        name="cetakan"
+        file="reportfel"
+    />
+  </data>
+                
+    <act_window id="picking_order" name="Picking Orders" res_model="pickings.orders" view_type="form" view_mode="tree,form"/>
+
+     <act_window id="picking_list" name="Picking List" res_model="stock.picking" view_type="form" view_mode="form"/>
+
+    <act_window id="picking_report" name="Picking Report" res_model="pickings.orders" view_type="form" view_mode="tree,form"/>
+    
+    
+<menuitem id="pickingorder" name="Felino"/>
+<menuitem id="menupicking" name="Pick order" parent="pickingorder" sequence="1" action="picking_order"/>
+
+<menuitem id="menupickinggroup" name="Pick Group" parent="pickingorder" sequence="10" action="picking_list"/>
+
+<menuitem id="f1" name="Report" parent="pickingorder" sequence="20" action="picking_report"/>
+
+</odoo>
